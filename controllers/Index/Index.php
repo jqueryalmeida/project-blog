@@ -12,12 +12,6 @@ class Index extends \Application\Core\Router
 			'title' => 'title',
 		);
 
-
-		//$test = 'test';
-		$test = $this->select('test', null, array('*'))->operator('WHERE')->condition(array('id', '=', 1))->execute()->fetch('all', 'fetch');
-
-		var_dump($test);
-
 		$this->render($array);
 	}
 }

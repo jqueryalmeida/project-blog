@@ -1,4 +1,4 @@
-<section id="admin" class="col-xs-3 col-sm-3 col-md-3 col-lg-1">
+<section id="admin" class="col-xs-3 col-sm-3 col-md-3 col-lg-1" ng-controller="AdminMenu">
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel panel-heading">
@@ -7,10 +7,11 @@
 
 			<div class="panel panel-body">
 				<ul class="list-unstyled btn-group-vertical" role="group">
+					<!--
 					<li class="btn-group">
 						<button type="button" role="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#" data-src="articles" data-link="add" data-type="post" data-data="false" ng-click="chooseMenu($event)">Ajouter</a></li>
+						<li><a href="#" data-src="articles" data-link="add" data-type="post" data-data="false" ng-click="chooseMenu($event)">Ajouter</a></li>
 							<li><a href="#" data-src="articles" data-link="edit" data-type="get">Modifier</a></li>
 							<li><a href="#" data-src="articles" data-link="delete" data-type="get">Supprimer</a></li>
 						</ul>
@@ -46,6 +47,13 @@
 							<li><a href="#" data-src="personal" data-link="edit">Modifier</a></li>
 							<li><a href="#" data-src="personal" data-link="delete">Supprimer</a></li>
 						</ul>
+					</li>
+
+					-->
+
+					<li class="btn-group" ng-repeat="category in categories">
+						{{category}}
+						<button type="{{category.attributes.type}}" role="{{category.params_category.attributes.role}}" class="{{category.attributes.class}}">{{category.name_category}}</button>
 					</li>
 				</ul>
 			</div>

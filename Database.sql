@@ -25,6 +25,16 @@ CREATE TABLE IF NOT EXISTS blog.users_information
   PRIMARY KEY pk_user (id_user)
 );
 
+CREATE TABLE IF NOT EXISTS blog.categories
+(
+  id_category varchar(20) NOT NULL,
+  name_category varchar(60) NOT NULL COLLATE utf8_bin,
+  description_category varchar(120) DEFAULT NULL COLLATE utf8_bin,
+  params_category blob DEFAULT NULL,
+  weight_category TINYINT(3) DEFAULT 0,
+  PRIMARY KEY pk_category(id_category)
+);
+
 
 USE blog;
 
@@ -37,3 +47,7 @@ ALTER TABLE users_information
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 
 INSERT INTO users(id_user, pseudo_user, password_user, email_user, id_grade) VALUE('56c5d5546bc32', 'admin', '$2y$10$ed2b386f2d313f251a300OFo177.9Lcf0Q53VYkRwmu.OqOdEmHLK', 'admincontact@blog.org', 10);
+
+INSERT INTO categories(id_category, name_category, description_category, params_category, weight_category) VALUES (
+  (0, 'Articles', 'Gestion des articles', '{attributes : [type : "button", role : "button", attributes : ]', 0)
+);

@@ -106,9 +106,9 @@ class Router extends Database\ConnectionDB implements Interfaces\Functions
 
 	public function checkUserGrade()
 	{
-		$user = $this->select('users', null, array('*'))
+		$user = $this->select('users', 'us', array('*'))
 				->join("grades", 'gr')
-				->on('users.id_grade', 'gr.id_grade')
+				->on('us.id_grade', 'gr.id_grade')
 				->operator('where')
 				->condition(array('id_user', '=', ':id_user'))
 				->prepared(array('id_user' => $this->getSession('id_user')))

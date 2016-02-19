@@ -2,18 +2,21 @@
 
 var app = angular.module('App', []);
 
-app.controller('AdminController', ['$scope', '$rootScope', '$http', function(scope, rootScope, http)
+app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function(scope, rootScope, http)
 {
-	var menus = angular.element('a[data-src]');
-
-	console.log(menus);
-
-	angular.forEach(menus, function(obj, item)
+	http(
+		{
+			method : 'get',
+			url : '/admin/getCategories'
+		}
+	).then(function(response)
 	{
-			obj.setAttribute('ng-click', 'chooseMenu($event)');
+		console.log(response.data);
+
+		scope.categories = response.data;
 	});
 
-	scope.chooseMenu = function(event)
+	rootScope.chooseMenu = function(event)
 	{
 		console.log(event);
 
@@ -36,5 +39,17 @@ app.controller('AdminController', ['$scope', '$rootScope', '$http', function(sco
 		});
 	};
 
+}]).directive('menuDirective', function(scope, item)
+{
+	return {
+		scope : {},
+		link : function()  {
+			console.log(scope, item);
+		}
+	};
+});
 
+app.controller('AdminController', ['$scope', function(scope)
+{
+	console.log('adminpanel controller');
 }]);

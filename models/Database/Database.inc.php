@@ -32,6 +32,8 @@ abstract class ConnectionDB extends \PDO
 	protected $fetched;
 	protected $prepared;
 	protected $executed;
+	protected $aliasT1;
+	protected $aliasT2;
 
 	public function __construct()
 	{
@@ -63,6 +65,10 @@ abstract class ConnectionDB extends \PDO
 	public function select($table, $alias = null, $fields = array())
 	{
 		$this->req = 'SELECT '.$fields[0]. ' FROM blog.'.$table;
+
+		$this->aliasT1 = $alias;
+
+		!empty($alias) ? $this->req .= ' AS ' . $alias : '';
 
 		return $this;
 	}
@@ -99,6 +105,7 @@ abstract class ConnectionDB extends \PDO
 
 	public function join($table, $alias)
 	{
+		$this->aliasT2 = $alias;
 		$this->req .= " JOIN blog.".$table." AS ".$alias;
 
 		return $this;
@@ -106,7 +113,7 @@ abstract class ConnectionDB extends \PDO
 
 	public function on($t1, $t2)
 	{
-		$this->req .= " ON ".$t1 . " = " . $t2;
+		$this->req .= " ON ".$this->aliasT1.'.'.$t1 . " = " . $this->aliasT2.'.'.$t2;
 
 		return $this;
 	}

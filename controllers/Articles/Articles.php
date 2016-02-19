@@ -20,6 +20,8 @@ class Articles extends \Application\Core\Router
 				'file' => 'views/Articles/add.php',
 		);
 
+		var_dump($this->user);
+
 			if($this->user >= 9999)
 			{
 				$data = file_get_contents('php://input');
