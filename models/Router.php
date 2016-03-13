@@ -108,7 +108,7 @@ class Router extends Database\ConnectionDB implements Interfaces\Functions
 	{
 		$user = $this->select('users', 'us', array('*'))
 				->join("grades", 'gr')
-				->on('us.id_grade', 'gr.id_grade')
+				->on('id_grade', 'id_grade')
 				->operator('where')
 				->condition(array('id_user', '=', ':id_user'))
 				->prepared(array('id_user' => $this->getSession('id_user')))

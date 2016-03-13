@@ -7,14 +7,14 @@ CREATE TABLE IF NOT EXISTS blog.users (
   email_user varchar(100) NOT NULL COLLATE utf8_bin,
   id_grade tinyint(2) DEFAULT '0',
   PRIMARY KEY pk_user(id_user)
-);
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS blog.grades (
   id_grade tinyint(2) NOT NULL,
   name_grade varchar(35) NOT NULL COLLATE utf8_bin,
   power_grade int(4) NOT NULL,
   PRIMARY KEY pk_grade(id_grade)
-);
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS blog.users_information
 (
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS blog.users_information
   lastname varchar(60) DEFAULT NULL COLLATE utf8_bin,
   birthday date DEFAULT NULL,
   PRIMARY KEY pk_user (id_user)
-);
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS blog.categories
 (
@@ -33,7 +33,26 @@ CREATE TABLE IF NOT EXISTS blog.categories
   params_category blob DEFAULT NULL,
   weight_category TINYINT(3) DEFAULT 0,
   PRIMARY KEY pk_category(id_category)
-);
+)CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS blog.attributes
+(
+  id_object varchar(20) NOT NULL,
+  name_attr varchar(20) NOT NULL,
+  valut_attr varchar(255) NOT NULL,
+  PRIMARY KEY pk_id_object(id_object)
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS blog.objects
+(
+  id_object varchar(20) NOT NULL,
+  name_object varchar(50) NOT NULL,
+  description_object varchar(100) DEFAULT NULL,
+  weight_object tinyint(4) DEFAULT 0,
+  relationship_object varchar(20) DEFAULT NULL,
+  parent_object varchar(20) DEFAULT NULL,
+  PRIMARY KEY pk_id_object(id_object)
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 
 USE blog;
@@ -44,10 +63,16 @@ ALTER TABLE users
 ALTER TABLE users_information
     ADD CONSTRAINT FOREIGN KEY fk_id_user(id_user) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE;
 
+ALTER TABLE attributes
+    ADD CONSTRAINT FOREIGN KEY fk_id_object(id_object) REFERENCES objects(id_object) ON UPDATE CASCADE ON DELETE CASCADE;
+
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 
 INSERT INTO users(id_user, pseudo_user, password_user, email_user, id_grade) VALUE('56c5d5546bc32', 'admin', '$2y$10$ed2b386f2d313f251a300OFo177.9Lcf0Q53VYkRwmu.OqOdEmHLK', 'admincontact@blog.org', 10);
 
-INSERT INTO categories(id_category, name_category, description_category, params_category, weight_category) VALUES (
-  (0, 'Articles', 'Gestion des articles', '{attributes : [type : "button", role : "button", attributes : ]', 0)
-);
+INSERT INTO objects(id_object, name_object, description_object, weight_object, relationship_object, parent_object) VALUES
+	('56e55bc5c85df', 'AdminRoot', 'Contient tout de Admin', -100, null, null),
+	('56e55be62d765', 'Catégories Admin', 'Gestion de la parties Admin', -10, '56e55bc5c85df', '56e55bc5c85df'),
+	('56e55c0be27d5', 'Articles', 'Gestion des articles', 0, '56e55be62d765', '56e55be62d765'),
+	('56e55c10e0c72', 'Gestion menus', 'Gérer les menues', 0, '56e55be62d765', '56e55be62d765')
+;

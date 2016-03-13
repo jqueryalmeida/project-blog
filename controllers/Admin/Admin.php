@@ -11,7 +11,7 @@ class Admin extends \Application\Core\Router
 
 	public function getCategories()
 	{
-		$cat = $this->select('categories', null, array('*'))->execute()->getData('all', 'obj');
+		$cat = $this->select('objects', null, array('*'))->execute()->getData('all', 'obj');
 
 		$this->json_output($cat);
 	}
@@ -24,6 +24,8 @@ class Admin extends \Application\Core\Router
 				'scripts' => array('admin/admin.js'),
 		);
 
+
+		var_dump(json_encode('{attributes : {role:button,class : btn btn-default btn-block}}'), uniqid());
 		$this->render($array);
 	}
 }

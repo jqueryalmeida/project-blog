@@ -12,6 +12,7 @@ app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function(scope, ro
 	).then(function(response)
 	{
 		console.log(response.data);
+		console.log(angular.toJson(response.data[1].params_category));
 
 		scope.categories = response.data;
 	});
