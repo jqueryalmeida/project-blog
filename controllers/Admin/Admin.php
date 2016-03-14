@@ -11,7 +11,23 @@ class Admin extends \Application\Core\Router
 
 	public function getCategories()
 	{
-		$cat = $this->select('objects', null, array('*'))->execute()->getData('all', 'obj');
+		$name = 'AdminRoot';
+
+		$admin = $this->select('objects', null, array('*'))
+				->operator('WHERE')
+				->condition(array('name_object', '=', ':name'))
+				->prepared(array('name' => $name))
+				//->execute()
+				->getData('fetch', 'obj');
+
+		$cat = $this->select('objects', 'obj', array('*'))
+				->join('attributes', 'attr', 'LEFT')
+				->on('id_object', 'id_object')
+				->operator('WHERE')
+				->condition(array('parent_object', '=', ':parent'))
+				->order('weight_object', 'ASC')
+				->prepared(array('parent' => $admin->id_object))
+				->getData('all', 'obj');
 
 		$this->json_output($cat);
 	}
@@ -24,8 +40,6 @@ class Admin extends \Application\Core\Router
 				'scripts' => array('admin/admin.js'),
 		);
 
-
-		var_dump(json_encode('{attributes : {role:button,class : btn btn-default btn-block}}'), uniqid());
 		$this->render($array);
 	}
 }

@@ -1,7 +1,8 @@
 <?php
+
 class Articles extends \Application\Core\Router
 {
-	protected $user = false;
+	protected $user = 0;
 
 	public function __construct()
 	{
@@ -17,20 +18,64 @@ class Articles extends \Application\Core\Router
 	public function add()
 	{
 		$array = array(
-				'file' => 'views/Articles/add.php',
+			'file' => 'views/Articles/add.php',
+				'script' => 'articles/add.js'
 		);
 
-		var_dump($this->user);
+		$categories = $this->select('categories', null, array('*'))
+				->execute()
+				->getData('all', 'obj');
 
-			if($this->user >= 9999)
+		$array = array_merge($array, array('categories' => $categories));
+
+		if ($this->user >= 9999) {
+			if(isset($_POST) && !empty($_POST))
 			{
-				$data = file_get_contents('php://input');
+				$post = new PostController($_POST);
+				$post = $post->getJson();
 
-				//$post = new PostController($data);
+				var_dump($post);
 
-				$this->json_output($array);
-			} else {
-				print 'false';
+				$id = uniqid();
+				$title = $post->article_title;
+				$desc = $post->desc_article;
+				$cate = $post->cate_article;
+				$text = $post->text_article;
+				$date = date('Y-m-d:H:m:s');
+				$author = $this->getSession('id_user');
+
+				$this->insert('articles',
+						array('id_article, title_article, description_article, text_article, publication_article, author_article, category_article', ':id, :title, :desc, :text, :publi, :author, :cate'),
+						array(
+							':id' => $id,
+								':title' => $title,
+								':desc' => $desc,
+								':text' => $text,
+								':publi' => $date,
+								':author' => $author,
+								':cate' => $cate,
+						));
 			}
+
+			$this->json_output($array);
+		} else {
+			print "false";
+		}
+	}
+
+	public function edit()
+	{
+		$array = array(
+			'file' => 'views/Articles/edit.php',
+
+		);
+
+		if($this->user >= 9999)
+		{
+			$this->json_output($array);
+		} else
+		{
+			print "false";
+		}
 	}
 }

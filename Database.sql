@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS blog.categories
   id_category varchar(20) NOT NULL,
   name_category varchar(60) NOT NULL COLLATE utf8_bin,
   description_category varchar(120) DEFAULT NULL COLLATE utf8_bin,
-  params_category blob DEFAULT NULL,
   weight_category TINYINT(3) DEFAULT 0,
   PRIMARY KEY pk_category(id_category)
 )CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
@@ -38,8 +37,7 @@ CREATE TABLE IF NOT EXISTS blog.categories
 CREATE TABLE IF NOT EXISTS blog.attributes
 (
   id_object varchar(20) NOT NULL,
-  name_attr varchar(20) NOT NULL,
-  valut_attr varchar(255) NOT NULL,
+  value_attr blob DEFAULT NULL,
   PRIMARY KEY pk_id_object(id_object)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
@@ -54,6 +52,17 @@ CREATE TABLE IF NOT EXISTS blog.objects
   PRIMARY KEY pk_id_object(id_object)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS blog.articles
+(
+  id_article varchar(20) NOT NULL,
+  title_article varchar(75) NOT NULL,
+  description_article varchar(150) DEFAULT NULL,
+  text_article LONGTEXT NOT NULL,
+  publication_article DATETIME NOT NULL,
+  author_article varchar(20) NOT NULL,
+  category_article varchar(20) NOT NULL,
+  PRIMARY KEY pk_id_article(id_article)
+)CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 USE blog;
 
@@ -65,6 +74,10 @@ ALTER TABLE users_information
 
 ALTER TABLE attributes
     ADD CONSTRAINT FOREIGN KEY fk_id_object(id_object) REFERENCES objects(id_object) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE articles
+    ADD CONSTRAINT FOREIGN KEY fk_id_author(author_article) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE,
+    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categories(id_category) ON UPDATE CASCADE ON DELETE CASCADE;
 
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 

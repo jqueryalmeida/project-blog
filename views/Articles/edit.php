@@ -1,1 +1,1 @@
-editpage
+Edit articles
