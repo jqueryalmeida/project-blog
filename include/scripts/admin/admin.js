@@ -2,17 +2,14 @@
 
 var app = angular.module('App', []);
 
-app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function(scope, rootScope, http)
-{
+app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function (scope, rootScope, http) {
 	http(
 		{
-			method : 'get',
-			url : '/admin/getCategories'
+			method: 'get',
+			url: '/admin/getCategories'
 		}
-	).then(function(response)
-	{
-		response.data.forEach(function(obj, key)
-		{
+	).then(function (response) {
+		response.data.forEach(function (obj, key) {
 			response.data[key].value_attr = angular.fromJson(response.data[key].value_attr);
 		});
 
@@ -21,10 +18,8 @@ app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function(scope, ro
 	});
 }]);
 
-app.controller('AdminController', ['$scope', '$http', function(scope, http)
-{
-	scope.chooseMenu = function(event)
-	{
+app.controller('AdminController', ['$scope', '$http', function (scope, http) {
+	scope.chooseMenu = function (event) {
 		console.log(event);
 
 		var src = event.currentTarget.dataset.src;
@@ -32,35 +27,30 @@ app.controller('AdminController', ['$scope', '$http', function(scope, http)
 		var type = event.currentTarget.dataset.type;
 		var data = event.currentTarget.dataset.data;
 
-		if(type == 'post')
-		{
+		if (type == 'post') {
 			http(
-					{
-						method : type,
-						url : '/'+src+'/'+link+'/'+data,
-						data : data
-					}
-			).then(function(response)
-			{
+				{
+					method: type,
+					url: '/' + src + '/' + link + '/' + data,
+					data: data
+				}
+			).then(function (response) {
 				scope.file = response.data.file;
 				scope.categories = response.data.categories;
 			});
-		} else
-		{
+		} else {
 			http(
-					{
-						method : type,
-						url : '/'+src+'/'+link
-					}
-			).then(function(response)
-			{
+				{
+					method: type,
+					url: '/' + src + '/' + link
+				}
+			).then(function (response) {
 				scope.file = response.data.file;
 			});
 		}
 	};
 }]);
 
-app.controller('AdminArticle', ['$scope', '$http', function(scope, http)
-{
+app.controller('AdminArticle', ['$scope', '$http', function (scope, http) {
 	console.log('admin article controller');
 }]);
