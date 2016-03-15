@@ -217,4 +217,11 @@ abstract class ConnectionDB extends \PDO
 
 		return $this;
 	}
+
+	public function del($table, $fields = array())
+	{
+		$this->req = "DELETE FROM blog.".$table." WHERE ".$fields[0];
+
+		return $this;
+	}
 }

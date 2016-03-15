@@ -14,6 +14,7 @@ class Router extends Database\ConnectionDB implements Interfaces\Functions
 	protected $controller;
 	protected $action;
 	protected $args;
+	protected $status = array();
 
 	public function __construct($url)
 	{

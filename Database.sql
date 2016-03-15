@@ -31,16 +31,21 @@ CREATE TABLE IF NOT EXISTS blog.categories
   name_category varchar(60) NOT NULL COLLATE utf8_bin,
   description_category varchar(120) DEFAULT NULL COLLATE utf8_bin,
   weight_category TINYINT(3) DEFAULT 0,
+	parent_category varchar(20) DEFAULT NULL,
+	id_menu varchar(20) DEFAULT NULL,
   PRIMARY KEY pk_category(id_category)
 )CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
+/*
 CREATE TABLE IF NOT EXISTS blog.attributes
 (
   id_object varchar(20) NOT NULL,
   value_attr blob DEFAULT NULL,
   PRIMARY KEY pk_id_object(id_object)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
+*/
 
+/*
 CREATE TABLE IF NOT EXISTS blog.objects
 (
   id_object varchar(20) NOT NULL,
@@ -51,6 +56,8 @@ CREATE TABLE IF NOT EXISTS blog.objects
   parent_object varchar(20) DEFAULT NULL,
   PRIMARY KEY pk_id_object(id_object)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
+*/
+
 
 CREATE TABLE IF NOT EXISTS blog.articles
 (
@@ -61,8 +68,19 @@ CREATE TABLE IF NOT EXISTS blog.articles
   publication_article DATETIME NOT NULL,
   author_article varchar(20) NOT NULL,
   category_article varchar(20) NOT NULL,
+	menu_article varchar(20) DEFAULT NULL,
   PRIMARY KEY pk_id_article(id_article)
 )CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
+
+
+CREATE TABLE IF NOT EXISTS blog.menus
+(
+	id_menu varchar(20) NOT NULL,
+	name_menu varchar(20) NOT NULL,
+	description_menu varchar(75) DEFAULT NULL,
+	weight_menu tinyint(3) DEFAULT 0,
+	PRIMARY KEY pk_id_menu(id_menu)
+) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 USE blog;
 
@@ -72,12 +90,18 @@ ALTER TABLE users
 ALTER TABLE users_information
     ADD CONSTRAINT FOREIGN KEY fk_id_user(id_user) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE;
 
+/*
 ALTER TABLE attributes
     ADD CONSTRAINT FOREIGN KEY fk_id_object(id_object) REFERENCES objects(id_object) ON UPDATE CASCADE ON DELETE CASCADE;
+*/
 
 ALTER TABLE articles
     ADD CONSTRAINT FOREIGN KEY fk_id_author(author_article) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE,
-    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categories(id_category) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categories(id_category) ON UPDATE CASCADE ON DELETE CASCADE,
+		ADD CONSTRAINT FOREIGN KEY fk_id_menu(menu_article) REFERENCES menus(id_menu) ON UPDATE CASCADE ON DELETE NO ACTION ;
+
+ALTER TABLE categories
+		ADD CONSTRAINT FOREIGN KEY fk_id_menu(id_menu) REFERENCES menus(id_menu) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 

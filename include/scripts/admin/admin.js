@@ -2,6 +2,7 @@
 
 var app = angular.module('App', []);
 
+/*
 app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function (scope, rootScope, http) {
 	http(
 		{
@@ -17,6 +18,7 @@ app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function (scope, r
 
 	});
 }]);
+*/
 
 app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 	scope.chooseMenu = function (event) {
@@ -27,30 +29,82 @@ app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 		var type = event.currentTarget.dataset.type;
 		var data = event.currentTarget.dataset.data;
 
-		if (type == 'post') {
-			http(
-				{
-					method: type,
-					url: '/' + src + '/' + link + '/' + data,
-					data: data
-				}
-			).then(function (response) {
-				scope.file = response.data.file;
-				scope.categories = response.data.categories;
-			});
-		} else {
-			http(
+		http(
 				{
 					method: type,
 					url: '/' + src + '/' + link
 				}
+		).then(function (response) {
+			scope.file = response.data.file;
+
+			switch (src) {
+				case 'categories' :
+					console.log('partie cate');
+					scope.categories = response.data.categories;
+					break;
+				case 'articles' :
+					break;
+				case 'menus' :
+					break;
+			}
+		});
+
+		$(document).on('ajaxComplete', function(event)
+		{
+			console.log('ajax complete');
+
+			http(
+					{
+						method: type,
+						url: '/' + src + '/' + link
+					}
 			).then(function (response) {
 				scope.file = response.data.file;
+
+				switch (src) {
+					case 'categories' :
+						console.log('partie cate');
+						scope.categories = response.data.categories;
+						break;
+					case 'articles' :
+						break;
+					case 'menus' :
+						break;
+				}
 			});
-		}
+		});
 	};
 }]);
 
-app.controller('AdminArticle', ['$scope', '$http', function (scope, http) {
-	console.log('admin article controller');
+app.controller('AdminEditCate', ['$scope', '$http', function (scope, http) {
+	console.log('admin cate controller');
+
+	scope.delete = function(event, elem)
+	{
+		console.log(event, elem);
+
+		event.preventDefault();
+
+		http(
+				{
+					method : 'get',
+					url : '/categories/delete/'+elem
+				}
+		).then(function(response)
+		{
+			console.log(response.data);
+
+			http(
+					{
+						method : 'get',
+						url : '/categories/edit/'
+					}
+			).then(function(response)
+			{
+				console.log(response.data);
+
+				scope.categories = response.data.categories;
+			});
+		});
+	};
 }]);
