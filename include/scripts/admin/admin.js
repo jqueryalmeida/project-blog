@@ -75,36 +75,3 @@ app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 		});
 	};
 }]);
-
-app.controller('AdminEditCate', ['$scope', '$http', function (scope, http) {
-	console.log('admin cate controller');
-
-	scope.delete = function(event, elem)
-	{
-		console.log(event, elem);
-
-		event.preventDefault();
-
-		http(
-				{
-					method : 'get',
-					url : '/categories/delete/'+elem
-				}
-		).then(function(response)
-		{
-			console.log(response.data);
-
-			http(
-					{
-						method : 'get',
-						url : '/categories/edit/'
-					}
-			).then(function(response)
-			{
-				console.log(response.data);
-
-				scope.categories = response.data.categories;
-			});
-		});
-	};
-}]);

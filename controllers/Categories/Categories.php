@@ -81,21 +81,58 @@ class Categories extends \Application\Core\Router
 		}
 	}
 
-	public function edit()
+	public function edit($selected = null)
 	{
-		$cate = $this->select('categories', null, array('*'))
+		if($this->user >= 9999)
+		{
+			$cate = $this->select('categories', null, array('*'))
 				->order('weight_category', 'ASC')
 				->execute()
 				->getData('all', 'obj');
 
-		$array = array(
-			'file' => 'views/Categories/edit.php',
-		);
+			$array = array(
+				'file' => 'views/Categories/edit.php',
+			);
 
-		$array = array_merge($array, array('categories' => $cate));
+			if(!empty($selected))
+			{
+				$select = $this->select('categories', null, array('*'))
+					->operator('WHERE')
+					->condition(array('id_category', '=', ':id'))
+					->prepared(array('id' => $selected[0]))
+					->getData('fetch', 'obj');
 
-		if($this->user >= 9999)
-		{
+				$array = array_merge($array, array('category' => $select));
+			}
+
+			$array = array_merge($array, array('categories' => $cate));
+
+			$edit = file_get_contents('php://input');
+
+			if(!empty($edit))
+			{
+				$post = new PostController(json_decode($edit));
+				$post = $post->getJson();
+
+				$id = $post->id_category;
+				$name = $post->name_category;
+				$weight = (int) $post->weight_category;
+
+				$update = $this->update('categories', array(
+					'name_category' => ':name',
+					'weight_category' => ':weight'
+				))
+				->operator('WHERE')
+				->condition(array('id_category', '=', ':id'))
+				->prepared(array(
+					'name' => $name,
+					'weight' => $weight,
+					'id' => $id
+				));
+
+				$array = array_merge($array, array('status' => $update->statement));
+			}
+
 			$this->json_output($array);
 		} else
 		{

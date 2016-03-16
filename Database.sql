@@ -85,19 +85,19 @@ CREATE TABLE IF NOT EXISTS blog.menus
 USE blog;
 
 ALTER TABLE users
-    ADD CONSTRAINT FOREIGN KEY fk_id_grade(id_grade) REFERENCES grades(id_grade) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT FOREIGN KEY fk_id_grade(id_grade) REFERENCES grades(id_grade) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 ALTER TABLE users_information
-    ADD CONSTRAINT FOREIGN KEY fk_id_user(id_user) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT FOREIGN KEY fk_id_user(id_user) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 /*
 ALTER TABLE attributes
-    ADD CONSTRAINT FOREIGN KEY fk_id_object(id_object) REFERENCES objects(id_object) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT FOREIGN KEY fk_id_object(id_object) REFERENCES objects(id_object) ON UPDATE NO ACTION ON DELETE NO ACTION;
 */
 
 ALTER TABLE articles
-    ADD CONSTRAINT FOREIGN KEY fk_id_author(author_article) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE CASCADE,
-    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categories(id_category) ON UPDATE CASCADE ON DELETE CASCADE,
+    ADD CONSTRAINT FOREIGN KEY fk_id_author(author_article) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE NO ACTION,
+    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categories(id_category) ON UPDATE CASCADE ON DELETE NO ACTION,
 		ADD CONSTRAINT FOREIGN KEY fk_id_menu(menu_article) REFERENCES menus(id_menu) ON UPDATE CASCADE ON DELETE NO ACTION ;
 
 ALTER TABLE categories
@@ -106,10 +106,3 @@ ALTER TABLE categories
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 
 INSERT INTO users(id_user, pseudo_user, password_user, email_user, id_grade) VALUE('56c5d5546bc32', 'admin', '$2y$10$ed2b386f2d313f251a300OFo177.9Lcf0Q53VYkRwmu.OqOdEmHLK', 'admincontact@blog.org', 10);
-
-INSERT INTO objects(id_object, name_object, description_object, weight_object, relationship_object, parent_object) VALUES
-	('56e55bc5c85df', 'AdminRoot', 'Contient tout de Admin', -100, null, null),
-	('56e55be62d765', 'Catégories Admin', 'Gestion de la parties Admin', -10, '56e55bc5c85df', '56e55bc5c85df'),
-	('56e55c0be27d5', 'Articles', 'Gestion des articles', 0, '56e55be62d765', '56e55be62d765'),
-	('56e55c10e0c72', 'Gestion menus', 'Gérer les menues', 0, '56e55be62d765', '56e55be62d765')
-;

@@ -34,6 +34,7 @@ abstract class ConnectionDB extends \PDO
 	protected $executed;
 	protected $aliasT1;
 	protected $aliasT2;
+	protected $statement = array();
 
 	public function __construct()
 	{
@@ -135,16 +136,18 @@ abstract class ConnectionDB extends \PDO
 	 */
 	public function prepared($args = array())
 	{
-		$this->prepared = $this::$instance->prepare($this->req);
+		$this->prepared = $this->getInstance()->prepare($this->req);
 
 		foreach($args as $index => $value)
 		{
 			$type = gettype($value);
 
-			$this->prepared->bindParam(':'.$index, $value, $this->type_var[$type]);
+			$this->prepared->bindValue(':'.$index, $value, $this->type_var[$type]);
 		}
 
-		$this->prepared->execute();
+		$status = $this->prepared->execute();
+
+		$this->statement = $status;
 
 		return $this;
 	}
@@ -214,6 +217,20 @@ abstract class ConnectionDB extends \PDO
 		$req->execute();
 
 		$this->prepared = $req;
+
+		return $this;
+	}
+
+	public function update($table, $fields = array())
+	{
+		$this->req = "UPDATE blog.".$table ." SET";
+
+		foreach($fields as $key => $value)
+		{
+			$this->req .= " ".$key."=".$value.',';
+		}
+
+		$this->req = substr($this->req, 0, -1);
 
 		return $this;
 	}

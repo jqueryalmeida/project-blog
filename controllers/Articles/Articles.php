@@ -4,6 +4,8 @@ class Articles extends \Application\Core\Router
 {
 	protected $user = 0;
 
+	protected $status = array();
+
 	public function __construct()
 	{
 		Core\Database\ConnectionDB::__construct();
@@ -15,7 +17,7 @@ class Articles extends \Application\Core\Router
 
 	}
 
-	public function add()
+	public function add($add)
 	{
 		$array = array(
 			'file' => 'views/Articles/add.php',
@@ -28,18 +30,19 @@ class Articles extends \Application\Core\Router
 
 		$array = array_merge($array, array('categories' => $categories));
 
+
 		if ($this->user >= 9999)
 		{
-			if(isset($_POST) && !empty($_POST))
+			if($add[0])
 			{
-				$post = new PostController($_POST);
+				$post = new PostController(file_get_contents('php://input'));
 				$post = $post->getJson();
 
 				$id = uniqid();
-				$title = $post->article_title;
-				$desc = $post->desc_article;
-				$cate = $post->cate_article;
-				$text = $post->text_article;
+				$title = $post->title;
+				$desc = $post->desc;
+				$cate = $post->cate;
+				$text = $post->text;
 				$date = date('Y-m-d:H:m:s');
 				$author = $this->getSession('id_user');
 
