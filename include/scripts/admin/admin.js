@@ -22,7 +22,6 @@ app.controller('AdminMenu', ['$scope', '$rootScope', '$http', function (scope, r
 
 app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 	scope.chooseMenu = function (event) {
-		console.log(event);
 
 		var src = event.currentTarget.dataset.src;
 		var link = event.currentTarget.dataset.link;
@@ -31,7 +30,7 @@ app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 
 		http(
 				{
-					method: type,
+					method: 'get',
 					url: '/' + src + '/' + link
 				}
 		).then(function (response) {
@@ -45,6 +44,8 @@ app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 				case 'articles' :
 					break;
 				case 'menus' :
+					console.log('menus admin controller');
+					scope.menus = response.data.menus;
 					break;
 			}
 		});
@@ -69,6 +70,8 @@ app.controller('AdminController', ['$scope', '$http', function (scope, http) {
 					case 'articles' :
 						break;
 					case 'menus' :
+						console.log('partie menus');
+						scope.menus = response.data.menus;
 						break;
 				}
 			});

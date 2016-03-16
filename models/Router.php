@@ -100,7 +100,7 @@ class Router extends Database\ConnectionDB implements Interfaces\Functions
 			'content' => $view,
 		);
 
-		$array = array_merge($default, $array);
+		$array = array_merge($default, $array, array('menus' => $this->menus()));
 		extract($array);
 		require_once 'views/template.tpl.inc.php';
 	}
@@ -138,5 +138,14 @@ class Router extends Database\ConnectionDB implements Interfaces\Functions
 	public function json_output($array)
 	{
 		return print json_encode($array);
+	}
+
+	private function menus()
+	{
+		$menus = $this->select('menus', null, array('*'))
+			->execute()
+			->getData('all', 'obj');
+
+		return $menus;
 	}
 }

@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS blog.menus
 	name_menu varchar(20) NOT NULL,
 	description_menu varchar(75) DEFAULT NULL,
 	weight_menu tinyint(3) DEFAULT 0,
+	link_menu varchar(150) NOT NULL,
 	PRIMARY KEY pk_id_menu(id_menu)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 

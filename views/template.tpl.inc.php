@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="/include/scripts/jquery.js"></script>
 	<script type="text/javascript" src="/include/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/include/scripts/angular.js"></script>
+	<script type="text/javascript" src="/include/scripts/menus/menus.js"></script>
 	<?php
 	if(isset($scripts))
 	{

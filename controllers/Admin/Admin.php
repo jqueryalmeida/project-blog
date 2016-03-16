@@ -37,7 +37,7 @@ class Admin extends \Application\Core\Router
 		$array = array(
 			'title' => 'Panel administratif',
 				'menu' => 'menu.admin.tpl.inc',
-				'scripts' => array('admin/admin.js', 'articles/add.js', 'categories/add.js', 'categories/edit.js'),
+				'scripts' => array('admin/admin.js', 'articles/add.js', 'categories/add.js', 'categories/edit.js', 'menus/add.js', 'menus/edit.js'),
 		);
 
 		$this->render($array);
