@@ -1,0 +1,21 @@
+{
+  "authors": [
+	{
+	  "name": "MERLIN Tahitoa",
+	  "role": "Developer - Owner project"
+	}
+  ],
+  "name": "BTS SIO - CNED",
+  "description": "BTS project",
+  "version": "0.0.1",
+  "require": {
+  },
+  "autoload": {
+	"files":["settings_database.php", "app/models/Buttons.class.php"],
+	"psr-4": {
+	  "App\\Models\\": "app/models",
+	  "App\\Database\\": "app/models/Database",
+	  "App\\Controllers\\": "app/controllers"
+	}
+  }
+}

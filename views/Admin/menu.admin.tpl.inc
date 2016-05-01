@@ -10,24 +10,24 @@
 					<li class="btn-group">
 						<button type="button" role="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Menus <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-						<li><a href="#" data-src="menus" data-link="add" data-type="post" data-data="0" ng-click="chooseMenu($event)">Ajouter</a></li>
-							<li><a href="#" data-src="menus" data-link="edit" data-type="get" data-data="0" ng-click="chooseMenu($event)">Modifier</a></li>
+						<li><a href="/admin/structure/menus/add" role="link">Ajouter</a></li>
+							<li><a href="/admin/structure/menus/edit" role="link">Modifier</a></li>
 						</ul>
 					</li>
 
 					<li class="btn-group">
 						<button type="button" role="button" data-toggle="dropdown" class="btn btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Articles <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-						<li><a href="#" data-src="articles" data-link="add" data-type="post" data-data="0" ng-click="chooseMenu($event)">Ajouter</a></li>
-							<li><a href="#" data-src="articles" data-link="edit" data-type="get" data-data="0" ng-click="chooseMenu($event)">Modifier</a></li>
+						<li><a href="/admin/content/articles/add">Ajouter</a></li>
+							<li><a href="/admin/content/articles/edit" data-src="articles" data-link="edit" data-type="get" data-data="0" ng-click="chooseMenu($event)">Modifier</a></li>
 						</ul>
 					</li>
 
 					<li class="btn-group">
 						<button type="button" role="button" data-toggle="dropdown" class="btn btn-block btn-default dropdown-toggle" aria-haspopup="true" aria-expanded="false">Catégories <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#" data-src="categories" data-link="add" data-data="0" ng-click="chooseMenu($event)">Ajouter</a></li>
-							<li><a href="#" data-src="categories" data-link="edit" data-data="0" ng-click="chooseMenu($event)">Modifier</a></li>
+							<li><a href="/admin/structure/categories/add">Ajouter</a></li>
+							<li><a href="/admin/structure/categories/edit">Modifier</a></li>
 						</ul>
 					</li>
 
@@ -57,12 +57,6 @@
 							<li><a href="#" data-src="personal" data-link="delete">Supprimer</a></li>
 						</ul>
 					</li>
-
-					<!--
-					<li class="edit-admin-buttons btn-group {{menu.value_attr.class}}" ng-repeat="menu in menus">
-						{{menu.name_object}}
-					</li>
-					-->
 				</ul>
 			</div>
 		</div>
