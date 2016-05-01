@@ -17,9 +17,9 @@ $database['database']['default'] = array(
 $database['database']['blog'] = array(
 	'driver' => 'mysql',
 	'host' => 'localhost',
-	'database' => 'btsdevjson',
-	'login' => 'root',
-	'password' => 'root',
+	'database' => 'blog',
+	'login' => 'blog',
+	'password' => 'merl9910A$',
 	'env' => TRUE,
 );
 
