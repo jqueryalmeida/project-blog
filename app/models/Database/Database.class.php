@@ -1,7 +1,11 @@
 <?php
 namespace App\Database;
 
+use App\Controllers\ErrorClass;
+use App\Models\Model;
 use App\Models\Router;
+use MongoDB\Driver\Exception\ExecutionTimeoutException;
+
 /**
  * {@inheritdoc}
  */
@@ -13,6 +17,8 @@ use App\Models\Router;
  */
 abstract class Database implements QueryBuilder
 {
+	use Model;
+
 	protected static $instance;
 	
 	protected $_request;
@@ -91,20 +97,23 @@ abstract class Database implements QueryBuilder
 	 * Insert the error in the database
 	 *
 	 * @param \Exception $error The instance of Exeception
+	 * @param string $type The type of error
 	 * @package App\Models\Database
 	 */
-	public function error(\Exception $error)
+	public function error(\Exception $error, string $type)
 	{
 		$this->_request = "";
 		$this->_prepared = "";
 
 		$this->insert('Error', true)
-			->values(array(':message, :code, :file, :line'))
+			->values(array(':message, :code, :file, :line, :trace, :type'))
 			->prepare()
 			->setParam(':message', $error->getMessage())
 			->setParam(':code', $error->getCode())
 			->setParam(':file', $error->getFile())
 			->setParam(':line', $error->getLine())
+			->setParam(':trace', $error->getTraceAsString())
+			->setParam(':type', $this->escapeString($type))
 			->execute();
 
 		$this->_request = "";
@@ -334,7 +343,13 @@ abstract class Database implements QueryBuilder
 	/**
 	 * Method to give an alias to fields/request/result
 	 *
-	 * @TODO write a sample
+	 * @Sample :
+	 *
+	 * $articles = $this->select(array('*, DATE_FORMAT(publication_article, \'%d/%m/%Y - %H:%i\')'))
+					->as('date')
+					->from('articles')
+					->query()
+					->fetch('all', 'obj');
 	 *
 	 * @param string $alias The name of alias
 	 * @access public
@@ -1078,12 +1093,11 @@ abstract class Database implements QueryBuilder
 	 * @tag join
 	 * @return $this
 	 */
-
 	public function order(string $field, string $order = 'ASC')
 	{
 		if (!$this->_order)
 		{
-			$this->_request .= "ORDER BY " . $field . " " . $order;
+			$this->_request .= "ORDER BY " . $field . " " . $order . " ";
 			$this->_order = TRUE;
 		}
 		else
@@ -1116,6 +1130,34 @@ abstract class Database implements QueryBuilder
 	public function group(array $fields)
 	{
 		$this->_request .= "GROUP BY " . $fields[0] . " ";
+
+		return $this;
+	}
+
+	/**
+	 * Method to limit the results retrieve by the request
+	 *
+	 * Samples :
+	 *
+	 * $articles = $this->select(array('*, DATE_FORMAT(publication_article, \'%d/%m/%Y - %H:%i\')'))
+	 *                  ->as('date')
+	 *                  ->from('articles')
+	 *                  ->order('publication_article', 'DESC')
+	 *                  ->limit(0, 5)
+	 *                  ->query()
+	 *                  ->fetch('all', 'obj');
+	 *
+	 * @param int $begin Min num for the return
+	 * @param int $max Max number to return
+	 * @access public
+	 * @author M. Tahitoa
+	 * @version 0.0.1
+	 * @tag join
+	 * @return $this
+	 */
+	public function limit(int $begin, int $max)
+	{
+		$this->_request .= "LIMIT ".$begin .",".$max . " ";
 
 		return $this;
 	}
@@ -1303,7 +1345,7 @@ abstract class Database implements QueryBuilder
 		catch (\Exception $e)
 		{
 			$_REQUEST['error_message'] = $e->getMessage();
-			$this->error($e);
+			$this->error($e, 'sql_error');
 		} finally
 		{
 		}
@@ -1332,29 +1374,36 @@ abstract class Database implements QueryBuilder
 		$this->_statement = FALSE;
 		$data = array();
 
-		if (!is_null($this->_prepared))
+		try
 		{
-			$prepared = $this->_prepared->{$this->fetch[$type]}($this->typeFetch[$format]);
+				if (!is_null($this->_prepared))
+				{
+					$prepared = $this->_prepared->{$this->fetch[$type]}($this->typeFetch[$format]);
 
-			if (!empty($prepared))
-			{
-				$data = $prepared;
-				$this->_statement = TRUE;
-			}
+					if (!empty($prepared))
+					{
+						$data = $prepared;
+						$this->_statement = TRUE;
+					}
 
+				}
+
+				if (!is_null($this->_result))
+				{
+					$query = $this->_result->{$this->fetch[$type]}($this->typeFetch[$format]);
+
+					$data = $query;
+				}
+
+			$this->_result = null;
+			$this->_request = null;
+			$this->_prepared = null;
+			return $data;
 		}
-
-		if (!is_null($this->_result))
+		catch(\Exception $e)
 		{
-			$query = $this->_result->{$this->fetch[$type]}($this->typeFetch[$format]);
-
-			$data = $query;
+			$this->error($e, 'sql_error');
 		}
-
-		$this->_result = null;
-		$this->_request = null;
-		$this->_prepared = null;
-		return $data;
 	}
 
 	/**
@@ -1384,11 +1433,7 @@ abstract class Database implements QueryBuilder
 		}
 		catch (\Exception $e)
 		{
-			$_REQUEST['error_message'] = $e->getMessage();
-			$this->error($e);
-		} finally
-		{
-
+			$this->error($e, 'sql_error');
 		}
 	}
 

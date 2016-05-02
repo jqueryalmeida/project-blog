@@ -1,4 +1,4 @@
-<section id="admin" class="col-xs-3 col-sm-3 col-md-3 col-lg-1">
+<section id="admin" class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel panel-heading text-center">
@@ -56,6 +56,13 @@
 							<li><a href="#" data-src="personal" data-link="edit">Modifier</a></li>
 							<li><a href="#" data-src="personal" data-link="delete">Supprimer</a></li>
 						</ul>
+					</li>
+
+					<li class="btn-group">
+						<button type="button" role="button">
+							<a href="/admin/reports">Rapports</a>
+						</button>
+
 					</li>
 				</ul>
 			</div>

@@ -1,18 +1,13 @@
-<section ng-controller="AdminController">
+<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php
 	include 'menu.admin.tpl.inc';
 	?>
-
-	<section class="col-xs-9 col-sm-9 col-md-6 col-lg-11">
-		<div class="row" ng-include="file">
-			<?php
-			if(file_exists($tpl))
-			{
-				include $tpl;
-			}
-			?>
-		</div>
-	</section>
-
-	<div class="clearfix" role="separator"></div>
+	<div class="row">
+		<?php
+		if (isset($tpl) && file_exists($tpl))
+		{
+			include $tpl;
+		}
+		?>
+	</div>
 </section>

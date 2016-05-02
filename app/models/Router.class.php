@@ -216,8 +216,7 @@ class Router extends Database
 		}
 		catch(\Exception $e)
 		{
-			var_dump($e);
-			$this->error($e);
+			$this->error($e, 'php_error');
 		}
 	}
 
@@ -258,14 +257,24 @@ class Router extends Database
 			if(file_exists('views/'.$calledClass[2].'/'.$file.'.tpl.php'))
 			{
 				$view = 'views/'.$calledClass[2].'/'.$file.'.tpl.php';
+
+				$default = array(
+					'content' => $view,
+				);
+
+				if(isset($arrayMerge['class_tpl']) && file_exists('views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php'))
+				{
+					$tpl = 'views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php';
+
+					$default = array(
+						'class_tpl' => $tpl,
+						'content' => $view,
+					);
+				}
 			} else
 			{
 				throw new \Exception('No file to render');
 			}
-
-			$default = array(
-				'content' => $view,
-			);
 
 			if(isset($arrayMerge))
 			{

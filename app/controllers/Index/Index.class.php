@@ -16,8 +16,11 @@ class Index extends Router
 			'title' => 'Page d\'accueil',
 		);
 
-		$articles = $this->select(array('*'))
+		$articles = $this->select(array('*, DATE_FORMAT(publication_article, \'%d/%m/%Y - %H:%i\')'))
+			->as('date')
 			->from('articles')
+			->order('publication_article', 'DESC')
+			->limit(0, 5)
 			->query()
 			->fetch('all', 'obj');
 

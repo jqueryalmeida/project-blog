@@ -8,12 +8,12 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Controllers\\Admin' => $baseDir . '/app/controllers/Admin/Admin.class.php',
     'App\\Controllers\\Articles' => $baseDir . '/app/controllers/Articles/Articles.class.php',
+    'App\\Controllers\\Blog' => $baseDir . '/app/controllers/Blog/Blog.class.php',
     'App\\Controllers\\Categories' => $baseDir . '/app/controllers/Categories/Categories.class.php',
     'App\\Controllers\\ErrorClass' => $baseDir . '/app/controllers/Error/Error.class.php',
     'App\\Controllers\\Index' => $baseDir . '/app/controllers/Index/Index.class.php',
     'App\\Controllers\\Members' => $baseDir . '/app/controllers/Members/Members.class.php',
     'App\\Controllers\\Menus' => $baseDir . '/app/controllers/Menus/Menus.class.php',
-    'App\\Controllers\\Structure' => $baseDir . '/app/controllers/Structure/Structure.class.php',
     'App\\Database\\Database' => $baseDir . '/app/models/Database/Database.class.php',
     'App\\Database\\QueryBuilder' => $baseDir . '/app/models/Database/InterfaceQuery.inc.php',
     'App\\Models\\Buttons' => $baseDir . '/app/models/Buttons.class.php',

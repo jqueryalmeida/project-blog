@@ -5,8 +5,6 @@ use App\Models\Router;
 
 class Admin extends Router
 {
-	use Structure;
-
 	protected $user;
 
 	public function __construct()
@@ -281,6 +279,33 @@ class Admin extends Router
 						break;
 				}
 				break;
+		}
+
+		$this->render($array);
+	}
+
+	public function reports(string $event = null, $args)
+	{
+		$errors = $this->select(array('*'))
+			->from('Error')
+			->query()
+			->fetch('all', 'obj');
+
+		$array = array(
+			'title' => 'Administration : Liste des erreurs',
+			'class_tpl' => 'errors',
+			'errors' => $errors,
+		);
+
+		if(!is_null($event))
+		{
+			$error = $this->select(array('*'))
+				->from('Error')
+				->where('idError', '=', $args[0])
+				->query()
+				->fetch('fetch', 'obj');
+			
+			$array = array_merge($array, array('error_selected' => $error));
 		}
 
 		$this->render($array);

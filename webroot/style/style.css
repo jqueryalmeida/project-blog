@@ -11,6 +11,13 @@
 	padding : 10px;
 }
 
+#article-container
+{
+	border : solid transparent;
+	box-shadow : 0 0 2px #B1B1DC;
+	margin-bottom : 5px;;
+	border-radius : 5px;
+}
 #menu-add label
 {
 	display : inline-block;
