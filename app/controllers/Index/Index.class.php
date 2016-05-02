@@ -13,8 +13,15 @@ class Index extends Router
 	public function index()
 	{
 		$array = array(
-			'title' => 'title',
+			'title' => 'Page d\'accueil',
 		);
+
+		$articles = $this->select(array('*'))
+			->from('articles')
+			->query()
+			->fetch('all', 'obj');
+
+		$array = array_merge($array, array('articles' => $articles));
 
 		$this->render($array);
 	}

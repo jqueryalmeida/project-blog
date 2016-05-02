@@ -28,9 +28,9 @@
 	<?php include 'templates/header.tpl.inc.php'; ?>
 </section>
 
-<div class="clearfix"></div>
+<div class="clearfix" style="margin-top: 20px;"></div>
 
-<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+<section id="global-container" class="container-fluid">
 	<?php
 	include $content;
 	?>

@@ -3,6 +3,14 @@
 	margin : auto 20% auto 20%;
 }
 
+#global-container
+{
+	margin : auto 12% 2% 12%;
+	border : solid transparent;
+	box-shadow: 0 0 2px #B1B1DC;
+	padding : 10px;
+}
+
 #menu-add label
 {
 	display : inline-block;
