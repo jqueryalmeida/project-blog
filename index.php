@@ -14,4 +14,4 @@ define('WEBROOT', ROOT.'webroot/');
 
 require_once ('vendor/autoload.php');
 
-$router = new Router($_GET['c'], 'dev');
+$router = new Router($_GET['c'], 'blog');
