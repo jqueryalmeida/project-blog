@@ -349,6 +349,8 @@ class Admin extends Router
 	{
 		if($this->user)
 		{
+			$array = array();
+
 			$errors = $this->select(array('*'))
 				->from('Error')
 				->query()
@@ -357,19 +359,29 @@ class Admin extends Router
 			$array = array(
 				'title' => 'Administration : Liste des erreurs',
 				'class_tpl' => 'errors',
-				'errors' => $errors,
 			);
 
 			if(!is_null($event))
 			{
-				$error = $this->select(array('*'))
-					->from('Error')
-					->where('idError', '=', $args[0])
-					->query()
-					->fetch('fetch', 'obj');
+				switch ($event)
+				{
+					case 'event':
+						$error = $this->select(array('*'))
+							->from('Error')
+							->where('idError', '=', $args[0])
+							->query()
+							->fetch('fetch', 'obj');
 
-				$array = array_merge($array, array('error_selected' => $error));
+						$array = array_merge($array, array('error_selected' => $error));
+						break;
+					case 'delete' :
+						$this->truncate('Error')
+							->query();
+						break;
+				}
 			}
+
+			$array = array_merge($array, array('errors' => $errors));
 
 			$this->render($array);
 		}

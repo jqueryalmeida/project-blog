@@ -8,13 +8,15 @@
 					<th>Message</th>
 				</tr>
 
+				<form method="post" action="/admin/reports/delete">
+					<input type="submit" name="clear" value="Vider" class="btn btn-danger" />
+				</form>
 				<?php foreach ($errors as $index => $error) : ?>
 					<tr>
-						<td><?php print $error->dateTime; ?></td>
-						<td><?php print $error->type; ?></td>
-						<td><a href="/admin/reports/event/<?php print $error->idError; ?>"><?php print substr($error->messageError, 0, 15); ?></a></td>
+							<td><?php print $error->dateTime; ?></td>
+							<td><?php print $error->type; ?></td>
+							<td><a href="/admin/reports/event/<?php print $error->idError; ?>"><?php print substr($error->messageError, 0, 15); ?></a></td>
 					</tr>
-
 				<?php endforeach; ?>
 			</table>
 		<?php endif; ?>

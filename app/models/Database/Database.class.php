@@ -268,6 +268,15 @@ abstract class Database implements QueryBuilder
 		return $this;
 	}
 
+	public function truncate(string $table)
+	{
+		$this->_request = null;
+		$this->_prepared = null;
+		
+		$this->_request .= "TRUNCATE ".$table;
+		return $this;
+	}
+
 	/**
 	 * Method to define the table to get data
 	 *

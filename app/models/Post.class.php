@@ -11,7 +11,17 @@ trait Post
 
 			foreach ($_POST as $index => $value)
 			{
-				$data[$index] = htmlspecialchars($value, ENT_HTML5, 'UTF-8');
+				if(is_array($value))
+				{
+					foreach ($value as $subIndex => $subValue)
+					{
+						$data[$index][$subIndex] = $subValue;
+					}
+				}
+				else
+				{
+					$data[$index] = htmlspecialchars($value, ENT_HTML5, 'UTF-8');
+				}
 			}
 
 			return $this->transformInJson($data);

@@ -4,22 +4,12 @@ namespace App\Controllers;
 use App\Database\Database;
 use App\Models\Router;
 
-class ErrorClass extends \Exception
+class ErrorClass
 {
-	protected $type;
 
+	//@TODO : Make a true error page
 	public function index()
 	{
-		print "page erreur";
-	}
-
-	public function setType(string $type)
-	{
-		$this->type = $type;
-	}
-
-	public function getType()
-	{
-		return $this->type;
+		print "Error Page";
 	}
 }
