@@ -13,3 +13,5 @@ define('WEBROOT', ROOT.'webroot/');
 require_once ('vendor/autoload.php');
 
 $router = new Router($_GET['c'], 'dev');
+
+unset($_SESSION['id_user'], $_SESSION['grade']);
