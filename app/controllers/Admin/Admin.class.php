@@ -180,9 +180,10 @@ class Admin extends Router
 								);
 
 								$this->insert('categorie', true)
-									->values(array(':data'))
+									->values(array(':data, :name'))
 									->prepare()
 									->setParam(':data', json_encode($form))
+									->setParam(':name', $post->cate_title)
 									->execute();
 							}
 
