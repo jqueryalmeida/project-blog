@@ -17,13 +17,6 @@
 			<input id="weight" type="text" name="menu_weight" ng-model="menu.weight" placeholder="Poids du menu" />
 		</div>
 		<div class="form-horizontal">
-			<label for="category">Catégorie : </label>
-			<select id="category" name="menu_cate" ng-model="menu.cate">
-				<option value=""></option>
-				<option value="{{category.id_category}}" ng-repeat="category in categories">{{category.name_category}}</option>
-			</select>
-		</div>
-		<div class="form-horizontal">
 			<input type="submit" name="add_menu" value="Ajouter" class="btn btn-success text-center" />
 		</div>
 	</form>

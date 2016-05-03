@@ -72,12 +72,15 @@ class Router extends Database
 			->query()
 			->fetch('fetch', 'obj');
 
-		$admin = $admin->power_grade;
+		if($admin)
+		{
+			$admin = $admin->power_grade;
 
-		$this->user = $admin;
+			$this->user = $admin;
 
 
-		return $this->_admin;
+			return $this->_admin;
+		}
 	}
 
 	private function explodeUrl()

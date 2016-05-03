@@ -112,7 +112,7 @@ abstract class Database implements QueryBuilder
 			->setParam(':code', $error->getCode())
 			->setParam(':file', $error->getFile())
 			->setParam(':line', $error->getLine())
-			->setParam(':trace', $error->getTraceAsString())
+			->setParam(':trace', json_encode($error->getTrace()))
 			->setParam(':type', $this->escapeString($type))
 			->execute();
 
