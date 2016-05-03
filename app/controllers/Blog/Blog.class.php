@@ -35,4 +35,9 @@ class Blog extends Router
 
 		$this->render($array);
 	}
+
+	public function read(int $article)
+	{
+		
+	}
 }

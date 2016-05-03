@@ -10,8 +10,8 @@
 
 				<?php foreach ($errors as $index => $error) : ?>
 					<tr>
-						<td><?php print $error->datetime; ?></td>
-						<td><?php print $error->typeError; ?></td>
+						<td><?php print $error->dateTime; ?></td>
+						<td><?php print $error->type; ?></td>
 						<td><a href="/admin/reports/event/<?php print $error->idError; ?>"><?php print substr($error->messageError, 0, 15); ?></a></td>
 					</tr>
 
@@ -35,7 +35,7 @@
 				</tr>
 				<tr>
 					<th>Type Erreur :</th>
-					<td><?php print $error_selected->typeError; ?></td>
+					<td><?php print $error_selected->type; ?></td>
 				</tr>
 				<tr>
 					<th>Message Erreur :</th>

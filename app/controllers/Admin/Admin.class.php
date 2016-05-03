@@ -13,6 +13,44 @@ class Admin extends Router
 		$this->userAdmin();
 	}
 
+	private function checkUser()
+	{
+		
+	}
+
+	public function login()
+	{
+		$array = array(
+			'title' => 'Page de connexion',
+			'class_tpl' => 'login',
+		);
+
+		$post = $this->treatData();
+
+		if(!empty($post))
+		{
+			$user = $this->select(array('*'))
+				->from('users', 'us')
+				->join('grades', 'gr')
+				->using('id_grade')
+				->where('email_user', '=', $post->email)
+				->query()
+				->fetch('fetch', 'obj');
+
+			if($user)
+			{
+				$check = password_verify($post->password, $user->password_user);
+
+				if($check)
+				{
+					$this->setSession('id_user', $user->id_user);
+					$this->setSession('grade', $user->power_grade);
+				}
+			}
+		}
+
+		$this->render($array);
+	}
 	public function index()
 	{
 		$array = array(
