@@ -219,8 +219,7 @@ class Router extends Database
 		}
 		catch(\Exception $e)
 		{
-			var_dump($e);
-			//$this->error($e, 'php_error');
+			$this->error($e, 'php_error');
 		}
 	}
 

@@ -14,6 +14,7 @@ class Members extends Router
 
 	public function index()
 	{
+		$this->render();
 	}
 
 	public function register($register_data)
@@ -91,8 +92,20 @@ class Members extends Router
 		}
 	}
 
-	public function edit($id_user)
+	public function deconnection()
 	{
+		session_destroy();
 
+		header('Location: /');
+	}
+
+	public function profil()
+	{
+		$check = $this->checkConnection($this->getSession('pseudo'));
+
+		if($check)
+		{
+
+		}
 	}
 }

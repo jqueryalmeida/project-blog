@@ -17,7 +17,13 @@
 			</div>
 		</form>
 		<?php else : ?>
-			<?php print $this->getSession('pseudo'); ?>
+			<section id="member-space">
+				<h3 class="text-center"><?php print $this->getSession('pseudo'); ?></h3>
+				<ul class="list-unstyled">
+					<li><a href="/members/profil">Mon profil</a></li>
+					<li><a href="/members/deconnection" rel="nofollow">Déconnexion</a></li>
+				</ul>
+			</section>
 		<?php endif; ?>
 	</section>
 </section>

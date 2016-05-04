@@ -18,7 +18,9 @@ class Index extends Router
 
 		$articles = $this->select(array('*, DATE_FORMAT(publication_article, \'%d/%m/%Y - %H:%i\')'))
 			->as('date')
-			->from('articles')
+			->from('articles', 'art')
+			->join('categorie', 'cat')
+			->on('art.category_article', 'cat.idCategory')
 			->order('publication_article', 'DESC')
 			->limit(0, 5)
 			->query()
