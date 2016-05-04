@@ -9,6 +9,7 @@
   "description": "BTS project",
   "version": "0.0.1",
   "require": {
+    "phpunit/phpunit": "^5.3"
   },
   "autoload": {
 	"files":["settings_database.php", "app/models/Buttons.class.php"],

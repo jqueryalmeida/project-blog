@@ -3,6 +3,14 @@
 	margin : auto 20% auto 20%;
 }
 
+#sidebar
+{
+	margin-right : 1%;
+	border : solid transparent;
+	box-shadow: 0 0 2px #B1B1DC;
+	padding : 10px;
+}
+
 #global-container
 {
 	margin : auto 12% 2% 12%;
@@ -15,7 +23,8 @@
 {
 	border : solid transparent;
 	box-shadow : 0 0 2px #B1B1DC;
-	margin-bottom : 5px;;
+	padding : 10px;
+	margin-bottom : 5px;
 	border-radius : 5px;
 }
 #menu-add label
@@ -28,4 +37,41 @@
 {
 	border-radius : 3px;
 	margin-bottom : 2px;
+}
+
+/* Sidebar content */
+#connection-form label
+{
+	display : inline-block;
+	width : 120px;
+}
+
+/* Ajax Message displaying */
+
+.success
+{
+	display : block;
+	background-color: #48BB26;
+	opacity: 0.5;
+	border-radius : 2px;
+	padding : 10px;
+	text-align : center;
+	z-index : 990;
+}
+
+.failed
+{
+	display : block;
+	background-color: #F94646;
+	opacity: 0.5;
+	border-radius : 2px;
+	padding : 10px;
+	text-align : center;
+	z-index : 990;
+}
+
+#text-message-ajax
+{
+	display : block;
+	z-index : 1000;
 }

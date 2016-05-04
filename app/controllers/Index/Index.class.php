@@ -28,4 +28,9 @@ class Index extends Router
 
 		$this->render($array);
 	}
+
+	public function testReturn($double)
+	{
+		return $double *2;
+	}
 }

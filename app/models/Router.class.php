@@ -219,14 +219,15 @@ class Router extends Database
 		}
 		catch(\Exception $e)
 		{
-			$this->error($e, 'php_error');
+			var_dump($e);
+			//$this->error($e, 'php_error');
 		}
 	}
 
 	public function render(array $arrayMerge = null)
 	{
 		$calledClass = explode('\\', get_called_class());
-		$this->defineAdmin();
+		//$this->defineAdmin();
 
 		try
 		{
@@ -296,7 +297,7 @@ class Router extends Database
 			$err = new ErrorClass();
 			$err->index();
 
-			$this->error($e);
+			$this->error($e, 'php_error');
 		}
 	}
 

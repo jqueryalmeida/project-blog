@@ -377,6 +377,8 @@ class Admin extends Router
 					case 'delete' :
 						$this->truncate('Error')
 							->query();
+
+						header('Location: /admin/reports');
 						break;
 				}
 			}

@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
 
+use App\Database\Database;
+
 trait Model
 {
 	public function load_script(string $name_script, string $library = null)
@@ -33,9 +35,16 @@ trait Model
 
 	public function preg(string $regex, string $string) : int
 	{
-		$test = preg_match($regex, $string);
+		if(!empty($regex) && !empty($string))
+		{
+			$test = preg_match($regex, $string);
 
-		return $test;
+			return $test;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	public function escapeString(string $string) : string
@@ -58,7 +67,7 @@ trait Model
 		}
 		else
 		{
-			return '';
+			return false;
 		}
 	}
 
@@ -67,15 +76,27 @@ trait Model
 		unset($_SESSION[$key]);
 	}
 
-	public function json_output(array $array = array()) : \stdClass
+	public function json_output(array $array = array()) : string
 	{
 		$array = array_merge($array, array('request' => $_REQUEST));
 
-		return json_decode(json_encode($array));
+		return print json_encode($array);
 	}
 
 	public function responseHttpRequest(string $index) : string
 	{
 		return $this->escapeString($_REQUEST[$index]);
+	}
+
+	public function checkConnection($user)
+	{
+		if($user)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 }

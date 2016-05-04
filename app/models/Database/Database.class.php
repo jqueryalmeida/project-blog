@@ -695,7 +695,7 @@ abstract class Database implements QueryBuilder
 	 */
 	public function where(string $field, string $operator = null, string $value = null)
 	{
-		$preg = Router::preg("/\:/", $value);
+		$preg = $this->preg("/\:/", $value);
 
 		if (!$preg)
 		{
@@ -1417,6 +1417,7 @@ abstract class Database implements QueryBuilder
 			$this->_result = null;
 			$this->_request = null;
 			$this->_prepared = null;
+
 			return $data;
 		}
 		catch(\Exception $e)
@@ -1447,12 +1448,17 @@ abstract class Database implements QueryBuilder
 		try
 		{
 			$this->_result = $this::getInstance()->query($this->_request);
-
-			return $this;
 		}
 		catch (\Exception $e)
 		{
 			$this->error($e, 'sql_error');
+			$error = new ErrorClass();
+			$error->index();
+		}
+
+		if(!isset($e))
+		{
+			return $this;
 		}
 	}
 

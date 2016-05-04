@@ -8,7 +8,7 @@
 				<div class="clearfix" role="separator"></div>
 				<div class=""><?php print $article->text_article; ?></div>
 				<div class="clearfix" role="separator"></div>
-				<div class="">
+				<div class="pull-right">
 					<?php print $article->date; ?>
 				</div>
 			</section>
