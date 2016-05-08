@@ -13,14 +13,6 @@
 	<script type="text/javascript" src="/webroot/librairies/jquery.js"></script>
 	<script type="text/javascript" src="/webroot/librairies/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/webroot/librairies/angular.js"></script>
-	<?php
-	if(isset($scripts))
-	{
-		foreach($scripts as $script) : ?>
-				<script type="text/javascript" src="<?php print $script; ?>"></script>
-		<?php endforeach;
-	}
-	?>
 	<title><?php print isset($title) ? $title : 'Blog MERLIN Tahitoa'; ?></title>
 </head>
 
@@ -32,10 +24,14 @@
 <div class="clearfix" style="margin-top: 20px;"></div>
 
 <section id="global-container" class="container-fluid">
-	<section class="col-xs-12 col-sm-6 col-md-5 col-lg-3 container-fluid">
+	<?php if(!$this->_admin) : ?>
+	<section class="col-xs-12 col-sm-4 col-md-3 col-lg-2 container-fluid">
 		<?php include 'templates/sidebar.tpl.inc.php'; ?>
 	</section>
-	<section class="container-fluid col-xs-12 col-sm-6 col-md-7 col-lg-9">
+		<?php else : ?>
+		<?php include 'views/Admin/menu.admin.tpl.inc'; ?>
+	<?php endif; ?>
+	<section class="container-fluid col-xs-12 col-sm-8 col-md-9 col-lg-10">
 		<div class="row">
 			<?php
 			include $content;
@@ -50,10 +46,26 @@
 	<?php include 'templates/footer.tpl.inc.php'; ?>
 </section>
 
+<?php
+if(isset($scripts))
+{
+	foreach($scripts as $script) : ?>
+		<script type="text/javascript" src="/webroot/scripts/<?php print $script; ?>"></script>
+	<?php endforeach;
+}
+?>
 <script type="text/javascript" src="/webroot/scripts/function.scripts.js"></script>
+<script type="text/javascript" src="/webroot/scripts/ajaxMessage.js"></script>
 <script type="text/javascript">
+	$(document).ready(function()
+	{
 		$('.icon-ajax-message').closeMessage();
-	
+
+		$(document).on('ajaxComplete', function(event)
+		{
+			console.log(event);
+		});
+	});
 </script>
 </body>
 </html>

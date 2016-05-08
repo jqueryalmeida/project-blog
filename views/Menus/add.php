@@ -1,4 +1,5 @@
 <section id="menu-add">
+	<section class="col-xs-12 col-sm-5 col-md-5 col-lg-10 container-fluid" style="margin-left : 20px;">
 	<form id="add_menu" method="post" action="/admin/structure/menus/add">
 		<div class="form-horizontal">
 			<label for="title">Titre menu : </label>
@@ -20,4 +21,5 @@
 			<input type="submit" name="add_menu" value="Ajouter" class="btn btn-success text-center" />
 		</div>
 	</form>
+		</section>
 </section>

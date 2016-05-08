@@ -78,8 +78,6 @@ trait Model
 
 	public function json_output(array $array = array()) : string
 	{
-		$array = array_merge($array, array('request' => $_REQUEST));
-
 		return print json_encode($array);
 	}
 

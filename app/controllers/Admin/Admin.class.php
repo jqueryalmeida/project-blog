@@ -86,6 +86,7 @@ class Admin extends Router
 		
 		return $categories;
 	}
+
 	public function structure(string $arg, $args)
 	{
 		if($this->user)
@@ -391,5 +392,101 @@ class Admin extends Router
 		{
 			$this->checkUser();
 		}
+	}
+
+	public function skills(string $event = null, $args = null)
+	{
+		$array = array(
+			'title' => 'Gestion des compétences',
+			'class_tpl' => 'personnal',
+			'case' => $this->escapeString($event),
+			'scripts' => array('admin/admin.js'),
+		);
+
+		if($this->user)
+		{
+			switch($event)
+			{
+				case 'add':
+					$post = $this->treatData();
+
+					if(!empty($post))
+					{
+						if(!empty($post->skill_name) && !empty($post->level_skill))
+						{
+							$form = array(
+								'name' => $post->skill_name,
+								'level' => $post->level_skill,
+							);
+
+							$skill = $this->insert('skills', true)
+								->values(array(':data, :name'))
+								->prepare()
+								->setParam(':data', json_encode($form))
+								->setParam(':name', $post->skill_name)
+								->execute();
+
+							$array = array_merge($array, array('status' => $skill->_statement));
+						}
+					}
+					break;
+				case 'edit':
+					$post = $this->treatData();
+
+					if(!empty($post))
+					{
+						$form = $form = array(
+							'name' => $post->name_skill,
+							'level' => $post->level_skill,
+						);
+
+						$update = $this->update('skills')
+							->set(array('dataSkill' => json_encode($form), 'nameSkill' => $post->name_skill))
+							->where('idSkill', '=', $post->id_skill)
+							->query();
+
+						$array = array_merge($array, array('status' => $update->_statement));
+
+					}
+
+					if(isset($args[0]))
+					{
+						$skill = $this->select(array('*'))
+							->from('skills')
+							->where('idSkill', '=', $this->escapeString($args[0]))
+							->query()
+							->fetch('fetch', 'obj');
+
+						$array = array_merge($array, array('selected' => $skill));
+
+					}
+
+					$skills = $this->select(array('*'))
+						->from('skills')
+						->query()
+						->fetch('all', 'obj');
+
+					$array = array_merge($array, array('skills' => $skills));
+					break;
+				case 'delete':
+					if(isset($args[0]))
+					{
+						$this->delete('skills')
+							->where('idSkill', '=', $this->escapeString($args[0]))
+							->query();
+
+						header('Location: /admin/skills/edit');
+					}
+					break;
+				default :
+					break;
+			}
+		}
+		else
+		{
+			$this->checkUser();
+		}
+
+		$this->render($array);
 	}
 }

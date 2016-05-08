@@ -226,70 +226,77 @@ class Router extends Database
 	public function render(array $arrayMerge = null)
 	{
 		$calledClass = explode('\\', get_called_class());
-		//$this->defineAdmin();
+		$this->defineAdmin();
 
 		try
 		{
-			$regex = '/^([a-zA-Z]).+/i';
-			$files = glob('views/'.$calledClass[2].'/*.tpl.php');
-
-			$result = array();
-			$i = 0;
-
-			foreach($files as $index => $file)
+			if(!$this->treatData())
 			{
-				preg_match($regex, $file, $match);
-				$str = explode('/', $file);
+				$regex = '/^([a-zA-Z]).+/i';
+				$files = glob('views/'.$calledClass[2].'/*.tpl.php');
 
-				$result[$i] = substr($str[2], 0, -8);
-				$i++;
-			}
+				$result = array();
+				$i = 0;
 
-			$file = '';
-
-			foreach($result as $key => $value)
-			{
-				$test = preg_match('/^'.$value.'/i', $calledClass[2], $match);
-
-				if($test)
+				foreach($files as $index => $file)
 				{
-					$file = $value;
+					preg_match($regex, $file, $match);
+					$str = explode('/', $file);
+
+					$result[$i] = substr($str[2], 0, -8);
+					$i++;
 				}
-			}
 
-			if(file_exists('views/'.$calledClass[2].'/'.$file.'.tpl.php'))
-			{
-				$view = 'views/'.$calledClass[2].'/'.$file.'.tpl.php';
+				$file = '';
 
-				$default = array(
-					'content' => $view,
-				);
-
-				if(isset($arrayMerge['class_tpl']) && file_exists('views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php'))
+				foreach($result as $key => $value)
 				{
-					$tpl = 'views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php';
+					$test = preg_match('/^'.$value.'/i', $calledClass[2], $match);
+
+					if($test)
+					{
+						$file = $value;
+					}
+				}
+
+				if(file_exists('views/'.$calledClass[2].'/'.$file.'.tpl.php'))
+				{
+					$view = 'views/'.$calledClass[2].'/'.$file.'.tpl.php';
 
 					$default = array(
-						'class_tpl' => $tpl,
 						'content' => $view,
 					);
+
+					if(isset($arrayMerge['class_tpl']) && file_exists('views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php'))
+					{
+						$tpl = 'views/'.$calledClass[2].'/'.$arrayMerge['class_tpl'].'.php';
+
+						$default = array(
+							'class_tpl' => $tpl,
+							'content' => $view,
+						);
+					}
+				} else
+				{
+					throw new \Exception('No file to render');
 				}
-			} else
-			{
-				throw new \Exception('No file to render');
+
+				if(isset($arrayMerge))
+				{
+					$array = array_merge($default, $arrayMerge);
+				} else
+				{
+					$array = $default;
+				}
+
+				extract($array);
+
+				require_once 'views/template.tpl.php';
 			}
-
-			if(isset($arrayMerge))
+			else
 			{
-				$array = array_merge($default, $arrayMerge);
-			} else
-			{
-				$array = $default;
+				$this->json_output($arrayMerge);
 			}
-
-			extract($array);
-
-			require_once 'views/template.tpl.php';
 		}
 		catch(\Exception $e)
 		{

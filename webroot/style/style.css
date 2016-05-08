@@ -75,3 +75,25 @@
 	display : block;
 	z-index : 1000;
 }
+
+/** Submenu dropdown ! Custom for BS3 **/
+
+.dropdown-submenu
+{
+	display : list-item !important;
+	margin-left : 20px;
+}
+
+.dropdown-submenu ul
+{
+	display: none;
+	list-style : none;
+}
+
+.dropdown-submenu:hover > ul
+{
+	display: block !important;
+	position : relative;
+	left: 80px;
+	top : -15px;
+}

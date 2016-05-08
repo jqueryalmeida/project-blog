@@ -1,4 +1,5 @@
 <section id="edit-menu">
+	<section class="col-xs-12 col-sm-5 col-md-5 col-lg-10 container-fluid" style="margin-left : 20px;">
 	<div>
 		<?php foreach($data as $index => $value) : $menu = json_decode($value->dataMenu);?>
 			<a href="/admin/structure/menus/edit/<?php print $value->idMenu; ?>" class="btn btn-link" role="link"><?php print $menu->title; ?></a>
@@ -18,4 +19,5 @@
 			</form>
 		</section>
 	<?php endif; ?>
+		</section>
 </section>

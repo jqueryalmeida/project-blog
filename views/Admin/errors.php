@@ -1,5 +1,8 @@
 <section id="error-container">
-	<section class="col-xs-9 col-sm-9 col-md-9 col-lg-10 row" style="margin-left : 5px;">
+	<section class="col-xs-12 col-sm-12 col-md-12 col-lg-12 container-fluid" style="margin-left : 20px;">
+		<form method="post" action="/admin/reports/delete">
+			<input type="submit" name="clear" value="Vider" class="btn btn-danger container-fluid" />
+		</form>
 		<?php if (!isset($error_selected)) : ?>
 			<table class="table table-bordered">
 				<tr>
@@ -8,9 +11,6 @@
 					<th>Message</th>
 				</tr>
 
-				<form method="post" action="/admin/reports/delete">
-					<input type="submit" name="clear" value="Vider" class="btn btn-danger" />
-				</form>
 				<?php foreach ($errors as $index => $error) : ?>
 					<tr>
 							<td><?php print $error->dateTime; ?></td>
@@ -22,7 +22,7 @@
 		<?php endif; ?>
 
 		<?php if (isset($error_selected)) : ?>
-			<table class="table table-bordered">
+			<table class="table table-bordered table-responsive container-fluid">
 				<tr>
 					<th>Fichier :</th>
 					<td><?php print $error_selected->file; ?></td>
@@ -44,7 +44,7 @@
 					<td><?php print $error_selected->messageError; ?></td>
 				</tr>
 			</table>
-			<h3 class="col-xs-9 col-sm-9 col-md-9 col-lg-10 row text-center">Trace </h3>
+			<h3 class="col-xs-9 col-sm-9 col-md-9 col-lg-10 container-fluid text-center">Trace </h3>
 			<div class="clearfix" role="separator"></div>
 			<?php $traces = json_decode($error_selected->trace); ?>
 			<?php foreach ($traces as $trace) : ?>

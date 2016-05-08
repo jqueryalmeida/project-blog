@@ -14,6 +14,7 @@ return array(
     'App\\Controllers\\Index' => $baseDir . '/app/controllers/Index/Index.class.php',
     'App\\Controllers\\Members' => $baseDir . '/app/controllers/Members/Members.class.php',
     'App\\Controllers\\Menus' => $baseDir . '/app/controllers/Menus/Menus.class.php',
+    'App\\Controllers\\Skills' => $baseDir . '/app/controllers/Skills/Skills.class.php',
     'App\\Controllers\\Veilles' => $baseDir . '/app/controllers/Veilles/Veilles.class.php',
     'App\\Database\\Database' => $baseDir . '/app/models/Database/Database.class.php',
     'App\\Database\\QueryBuilder' => $baseDir . '/app/models/Database/InterfaceQuery.inc.php',

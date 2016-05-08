@@ -1356,8 +1356,17 @@ abstract class Database implements QueryBuilder
 	{
 		try
 		{
-			$this->_prepared->execute();
+			$status = $this->_prepared->execute();
 			$this->_request = null;
+
+			if($status)
+			{
+				$this->_statement = TRUE;
+			}
+			else
+			{
+				$this->_statement = FALSE;
+			}
 
 			return $this;
 		}
@@ -1458,6 +1467,7 @@ abstract class Database implements QueryBuilder
 
 		if(!isset($e))
 		{
+			$this->_statement = TRUE;
 			return $this;
 		}
 	}
