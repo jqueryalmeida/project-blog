@@ -10,6 +10,8 @@
 /vendor/symfony
 /vendor/phpunit
 /tests
+/settings_database.php
 index.php
 /phpunit.xml
 /composer.lock
+/vendor/composer/installed.json
