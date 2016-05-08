@@ -47,6 +47,8 @@ class Admin extends Router
 					$this->setSession('grade', $user->power_grade);
 
 					$this->user = TRUE;
+
+					header('Location: /admin');
 				}
 			}
 		}
@@ -112,7 +114,7 @@ class Admin extends Router
 									'weight' => $post->menu_weight,
 								);
 
-								$this->insert('menu', true)
+								$adding = $this->insert('menu', true)
 									->values(array(':data'))
 									->prepare()
 									->setParam(':data', json_encode($form))
@@ -242,7 +244,7 @@ class Admin extends Router
 					break;
 			}
 
-			$this->render($array);
+			$this->render($array, null);
 		}
 		else
 		{
@@ -398,7 +400,7 @@ class Admin extends Router
 	{
 		$array = array(
 			'title' => 'Gestion des compétences',
-			'class_tpl' => 'personnal',
+			'class_tpl' => 'skills',
 			'case' => $this->escapeString($event),
 			'scripts' => array('admin/admin.js'),
 		);
@@ -426,7 +428,7 @@ class Admin extends Router
 								->setParam(':name', $post->skill_name)
 								->execute();
 
-							$array = array_merge($array, array('status' => $skill->_statement));
+							$array = array_merge($array, array('status' => $skill->_statement, 'ajax' => true));
 						}
 					}
 					break;
@@ -445,7 +447,7 @@ class Admin extends Router
 							->where('idSkill', '=', $post->id_skill)
 							->query();
 
-						$array = array_merge($array, array('status' => $update->_statement));
+						$array = array_merge($array, array('status' => $update->_statement, 'ajax' => true));
 
 					}
 
@@ -488,5 +490,70 @@ class Admin extends Router
 		}
 
 		$this->render($array);
+	}
+
+	public function experiences(string $event = null, $args = null)
+	{
+		if($this->user)
+		{
+			$array = array(
+				'title' => 'Gestion des expériences',
+				'class_tpl' => 'experiences',
+				'scripts' => array('admin/admin.js'),
+				'case' => $this->escapeString($event),
+			);
+
+			try
+			{
+				switch($event)
+				{
+					case 'add' :
+						$post = $this->treatData();
+
+						if(!empty($post))
+						{
+							$time = date_diff(date_create($post->begin_exp), date_create($post->end_exp));
+
+							$form = array(
+								'name' => $post->name_job,
+								'enterprise' => $post->name_entreprise,
+								'begin' => $post->begin_exp,
+								'end' => $post->end_exp,
+								'details' => $post->description_exp,
+								'contrat' => $post->contrat,
+								'dureeContrat' => array(
+									'year' => $time->y,
+									'months' => $time->m,
+									'days' => $time->d
+								),
+							);
+							
+							$add = $this->insert('experiences', true)
+								->values(array(':data, :name'))
+								->prepare()
+								->setParam(':data', json_encode($form))
+								->setParam(':name', $post->name_job)
+								->execute();
+
+							$array = array_merge($array, array('status' => $add->_statement, 'ajax' => true));
+						}
+						break;
+					case 'edit' :
+						break;
+					default :
+						throw new \Exception('Not in possibilities');
+				}
+			}
+			catch(\Exception $e)
+			{
+				$this->error($e, 'php_error');
+			}
+
+			$this->render($array);
+		}
+		else
+		{
+			$this->checkUser();
+		}
 	}
 }

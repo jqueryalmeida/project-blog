@@ -230,7 +230,12 @@ class Router extends Database
 
 		try
 		{
-			if(!$this->treatData())
+			//To Restore response in JSON format
+			if(isset($arrayMerge['ajax']) && is_bool($arrayMerge['ajax']))
+			{
+				$this->json_output($arrayMerge);
+			}
+			else
 			{
 				$regex = '/^([a-zA-Z]).+/i';
 				$files = glob('views/'.$calledClass[2].'/*.tpl.php');
@@ -292,10 +297,6 @@ class Router extends Database
 				extract($array);
 
 				require_once 'views/template.tpl.php';
-			}
-			else
-			{
-				$this->json_output($arrayMerge);
 			}
 		}
 		catch(\Exception $e)

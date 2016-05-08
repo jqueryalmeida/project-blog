@@ -28,7 +28,7 @@
 	<section class="col-xs-12 col-sm-4 col-md-3 col-lg-2 container-fluid">
 		<?php include 'templates/sidebar.tpl.inc.php'; ?>
 	</section>
-		<?php else : ?>
+		<?php elseif($this->_admin && $this->getSession('id_user') && $this->getSession('grade') == 9999) : ?>
 		<?php include 'views/Admin/menu.admin.tpl.inc'; ?>
 	<?php endif; ?>
 	<section class="container-fluid col-xs-12 col-sm-8 col-md-9 col-lg-10">

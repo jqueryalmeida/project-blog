@@ -1,4 +1,4 @@
-<section id="menu-admin" class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+<section id="menu-admin" class="col-xs-12 col-sm-3 col-md-3 col-lg-2">
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel panel-heading text-center">
@@ -63,7 +63,13 @@
 								<ul class="" style="">
 									<li><a href="/admin/skills/add" class="btn btn-default">Ajouter</a></li>
 									<li><a href="/admin/skills/edit" class="btn btn-default">Modifier</a></li>
-									<li><a href="/admin/skills/delete" class="btn btn-default">Ajouter</a></li>
+								</ul>
+							</li>
+							<li class="dropdown-submenu btn-group">
+								Expériences Professionnelles <span class="caret"></span>
+								<ul>
+									<li><a href="/admin/experiences/add" class="btn btn-default">Ajouter</a></li>
+									<li><a href="/admin/experiences/edit" class="btn btn-default">Modifier</a></li>
 								</ul>
 							</li>
 							<li><a href="#" data-src="personal" data-link="edit">Modifier</a></li>

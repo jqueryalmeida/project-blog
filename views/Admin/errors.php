@@ -15,7 +15,7 @@
 					<tr>
 							<td><?php print $error->dateTime; ?></td>
 							<td><?php print $error->type; ?></td>
-							<td><a href="/admin/reports/event/<?php print $error->idError; ?>"><?php print substr($error->messageError, 0, 15); ?></a></td>
+							<td><a href="/admin/reports/event/<?php print $error->idError; ?>"><?php print substr($error->messageError, 0, 20); ?></a></td>
 					</tr>
 				<?php endforeach; ?>
 			</table>

@@ -1,4 +1,15 @@
 ### PhpStorm ###
 
 .idea/*.xml
+/vendor/bin
+/vendor/phpspec
+/vendor/sebastian
+/vendor/phpdocumentor
+/vendor/doctrine
+/vendor/myclabs
+/vendor/symfony
+/vendor/phpunit
+/tests
 index.php
+/phpunit.xml
+/composer.lock

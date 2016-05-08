@@ -97,4 +97,20 @@ trait Model
 			return FALSE;
 		}
 	}
+
+	public function formatDate(string $date, string $to = 'en')
+	{
+		switch($to)
+		{
+			case 'fr':
+				$frDate = explode('-', $date);
+
+				$newDate = $frDate[2].'/'.$frDate[1].'/'.$frDate[0];
+				break;
+			default :
+				break;
+		}
+
+		return $newDate;
+	}
 }

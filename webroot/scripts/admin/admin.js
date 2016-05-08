@@ -64,3 +64,32 @@ $('#edit-skill').on('submit', function(event)
 		}
 	});
 });
+
+$('#add-experience-form').on('submit', function(event)
+{
+	event.preventDefault();
+
+	var data = $(this).serialize();
+	var form = $(this)[0];
+
+	$.ajax(
+		{
+			method : 'post',
+			url : '/admin/experiences/add',
+			data : data
+		}
+	).complete(function(response)
+	{
+		var json = JSON.parse(response.responseText);
+
+		if(json.status)
+		{
+			$.fn.setMessage('Ajouté avec succés', 'success', 'hidden failed', 'slow');
+			form.reset();
+		}
+		else
+		{
+			$.fn.setMessage('Erreur ajout', 'failed', 'hidden success', 'slow');
+		}
+	});
+});
