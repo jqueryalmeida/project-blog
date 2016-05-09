@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Router;
 
 ini_set('startup_display_errors', E_ALL);

@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS blog CHARACTER SET = UTF8 COLLATE utf8_bin;
 
 CREATE TABLE IF NOT EXISTS blog.Error
 (
-	idError int(100) AUTO_INCREMENT,
+	idError int(100) NOT NULL AUTO_INCREMENT,
 	messageError TEXT NOT NULL,
 	codeError VARCHAR(255) NOT NULL,
 	file VARCHAR(255) NOT NULL,
@@ -40,36 +40,35 @@ CREATE TABLE IF NOT EXISTS blog.users_information
 
 CREATE TABLE IF NOT EXISTS blog.categorie
 (
-  id_category varchar(20) AUTO_INCREMENT,
+  idCategory int(5) NOT NULL AUTO_INCREMENT,
 	dataCategory LONGBLOB NOT NULL,
   name_category varchar(60) NOT NULL COLLATE utf8_bin,
-  PRIMARY KEY pk_category(id_category)
+  PRIMARY KEY pk_category(idCategory)
 )CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS blog.articles
 (
-  id_article varchar(20) AUTO_INCREMENT,
+  id_article int(20) NOT NULL AUTO_INCREMENT,
   title_article varchar(75) NOT NULL,
   description_article varchar(150) DEFAULT NULL,
   text_article LONGTEXT NOT NULL,
   publication_article TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	author_article varchar(20) NOT NULL,
-  category_article varchar(20) NOT NULL,
+  category_article int(5) NOT NULL,
   PRIMARY KEY pk_id_article(id_article)
 )CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 
 CREATE TABLE IF NOT EXISTS blog.menu
 (
-	id_menu varchar(20) AUTO_INCREMENT,
+	id_menu int(20) NOT NULL AUTO_INCREMENT,
 	dataMenu MEDIUMBLOB NOT NULL,
-	name_menu varchar(20) NOT NULL,
 	PRIMARY KEY pk_id_menu(id_menu)
 ) CHARACTER SET = UTF8 COLLATE utf8_bin, ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS blog.skills
 (
-	idSkill int(4) AUTO_INCREMENT,
+	idSkill int(4) NOT NULL AUTO_INCREMENT,
 	dataSkill TINYBLOB NOT NULL,
 	nameSkill varchar(50) NOT NULL,
 	PRIMARY KEY pk_id_skill (idSkill)
@@ -77,7 +76,7 @@ CREATE TABLE IF NOT EXISTS blog.skills
 
 CREATE TABLE IF NOT EXISTS blog.experiences
 (
-	idExperience int(5) AUTO_INCREMENT,
+	idExperience int(5) NOT NULL AUTO_INCREMENT,
 	dataExperience LONGBLOB NOT NULL,
 	nameExperience VARCHAR(100) NOT NULL,
 	PRIMARY KEY pk_id_exp(idExperience)
@@ -94,7 +93,7 @@ ALTER TABLE users_information
 
 ALTER TABLE articles
     ADD CONSTRAINT FOREIGN KEY fk_id_author(author_article) REFERENCES users(id_user) ON UPDATE CASCADE ON DELETE NO ACTION,
-    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categorie(id_category) ON UPDATE CASCADE ON DELETE NO ACTION;
+    ADD CONSTRAINT FOREIGN KEY fk_id_category(category_article) REFERENCES categorie(idCategory) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 INSERT INTO grades(id_grade, name_grade, power_grade) VALUE(10, 'SuperAdmin', 9999);
 
